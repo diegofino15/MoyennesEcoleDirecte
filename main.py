@@ -8,8 +8,20 @@ from utilities import *
 
 # Define a function to get the username and the password
 def get_info():
-    try: username = sys.argv[1]
-    except: sys.exit("Arrêt : Pas d'identifiant spécifié")
+    # Try to get a already used account from files
+    try:
+        with open("./users.json") as file:
+            info = json.load(file)
+            file.close()
+        
+        username = info['username']
+        password = info['password']
+    except:
+        try: username = sys.argv[1]
+        except: sys.exit("Arrêt : Pas d'identifiant spécifié")
+        # Get the user password
+        password = getpass.getpass('Mot de passe : ')
+
     try: return_type = sys.argv[2]
     except: return_type = '-t'
 
@@ -18,15 +30,22 @@ def get_info():
     return_types = ['-t', 't', '-s', 's', '-j', 'j']
     if not return_type in return_types: return_type = '-t'
 
-    # Get the user password
-    password = getpass.getpass('Mot de passe : ')
-
     # Return the informations
     return {
         'username': username,
         'password': password,
         'return_type': return_type
     }
+
+# Define a function to save the account
+def save_info(username, password):
+    data = {
+        'username': username,
+        'password': password
+    }
+    with open('./users.json', 'w') as file:
+        json.dump(data, file)
+        file.close()
 
 # Define a function to login into Ecole Directe API and get the notes
 def login(username, password):
@@ -213,5 +232,6 @@ reponse = verify_login(informations['username'], informations['password'])
 if reponse[0]:
     averages = calculate_averages(reponse[1])
     # Return the wanted result
+    save_info(informations['username'], informations['password'])
     return_results(averages, informations['return_type'])
 else: sys.exit('Identifiant ou mot de passe invalide.')
