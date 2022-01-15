@@ -270,6 +270,3 @@ def get_codes():
         'trimetres_codes': trimestres_codes,
         'subjects_codes': subjects_codes
     }
-
-
-
