@@ -32,13 +32,11 @@ git pull
 
 ## Utilisation
 
-Le script ne marche qu'avec les comptes `E` (Eleve). Les comptes famille ne sont pas supportés. Ouvrez le script depuis le terminal ou en cliquant sur l'icône dans le File Explorer.
+Vous pouvez lancer le script avec le terminal, en donnant comme paramètre l'identifiant, et de base cela rend les résultats en forme de tableau dans le terminal. Vous pouvez aussi spécifier le type de rendu que vous désirez, (t = terminal, s = site internet, j = json)
 ```console
-python3 moyennes.py
+python3 moyennes.py [identifiant]
+python3 moyennes.py [identifiant] [return_type]
 ```
-
-### Valeurs montrées
-Le script va générer un site internet, avec votre nom, votre moyenne générale, et vos moyennes de chaque matière et de chaque trimestre de l'année.
 
 ### Attention
 Les valeurs affichées ne sont pas exactes, car École Directe ne fournit pas les coefficients des contrôles, les moyennes devraient être assez proches de la réalité.
