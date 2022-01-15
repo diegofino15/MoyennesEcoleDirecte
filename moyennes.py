@@ -163,24 +163,24 @@ def calculate_averages(averages):
 
     final_result = {
         # Gets the averages into dedicated variables
-        'complete_name': complete_name,
-        'general_averages' : return_average(subjects_codes['general']),
-        'general_class_averages' : return_average(subjects_codes['general'], index=1),
-        'francais' : return_average(subjects_codes['francais']),
-        'latin' : return_average(subjects_codes['latin']),
-        'anglais' : return_average(subjects_codes['anglais']),
-        'espagnol' : return_average(subjects_codes['espagnol']),
-        'allemand' : return_average(subjects_codes['allemand']),
-        'histoire' : return_average(subjects_codes['histoire']),
-        'emc' : return_average(subjects_codes['emc']),
-        'maths' : return_average(subjects_codes['maths']),
-        'physique' : return_average(subjects_codes['physique']),
-        'svt' : return_average(subjects_codes['svt']),
-        'techno' : return_average(subjects_codes['technologie']),
-        'sport' : return_average(subjects_codes['sport']),
-        'arts' : return_average(subjects_codes['arts']),
-        'musique' : return_average(subjects_codes['musique']),
-        'chorale' : return_average(subjects_codes['chorale'])
+        "complete_name": complete_name,
+        "general_averages" : return_average(subjects_codes['general']),
+        "general_class_averages" : return_average(subjects_codes['general'], index=1),
+        "francais" : return_average(subjects_codes['francais']),
+        "latin" : return_average(subjects_codes['latin']),
+        "anglais" : return_average(subjects_codes['anglais']),
+        "espagnol" : return_average(subjects_codes['espagnol']),
+        "allemand" : return_average(subjects_codes['allemand']),
+        "histoire" : return_average(subjects_codes['histoire']),
+        "emc" : return_average(subjects_codes['emc']),
+        "maths" : return_average(subjects_codes['maths']),
+        "physique" : return_average(subjects_codes['physique']),
+        "svt" : return_average(subjects_codes['svt']),
+        "techno" : return_average(subjects_codes['technologie']),
+        "sport" : return_average(subjects_codes['sport']),
+        "arts" : return_average(subjects_codes['arts']),
+        "musique" : return_average(subjects_codes['musique']),
+        "chorale" : return_average(subjects_codes['chorale'])
     }
 
     return final_result
