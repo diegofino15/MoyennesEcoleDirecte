@@ -18,6 +18,7 @@ cd ./MoyennesEcoleDirecte
 Une fois le repo installé et une fois que vous êtes dedans, installez les modules requis.
 ```console
 pip install requests
+pip install sys
 pip install json
 pip install getpass
 ```
