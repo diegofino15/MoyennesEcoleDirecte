@@ -3,6 +3,7 @@
 # Import the needed modules for the program
 import requests
 import json
+import getpass
 
 # Define the different website types
 website_part1 = '''
@@ -166,7 +167,7 @@ def login(username, password):
 
 # Gets the informations given to the script
 username_received = input('Username : ')
-password_received = input('Password : ')
+password_received = getpass.getpass(prompt="Password : ")
 
 # Try to connect to the website and get the informations
 if username_received != '' and password_received != '':
