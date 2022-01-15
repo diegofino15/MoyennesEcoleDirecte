@@ -1,6 +1,8 @@
 # MoyennesEcoleDirecte
 Ce programme vous permettra de récupérer des informations sur vos notes et de calculer votre moyenne, il va aussi créer un site internet avec les moyennes affichées de façon rangée et organisée.
 
+Il y a aussi une version de ce programme en site internet disponible à : http://moyennesed.my.to
+
 ## Téléchargements
 
 ### Pré-requis
