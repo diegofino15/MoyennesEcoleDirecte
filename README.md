@@ -1,8 +1,7 @@
 # MoyennesEcoleDirecte
-Ce programme vous permettra de récupérer des informations sur vos notes et de calculer votre moyenne, avec une simple 
-connexion à EcoleDirecte.
+Ce programme vous permettra de récupérer des informations sur vos notes et de calculer votre moyenne, il va aussi créer un site internet avec les moyennes affichées de façon rangée et organisée.
 
-## Téléchargement
+## Téléchargements
 
 ### Pré-requis
 Vous devez avoir Python 3 installé ainsi que pip (installé en même temps que Python).
@@ -15,7 +14,7 @@ cd ./MoyennesEcoleDirecte
 ```
 
 Une fois le repo installé et une fois que vous êtes dedans, installez les modules requis.
-```
+```console
 pip install requests
 pip install json
 pip install getpass
