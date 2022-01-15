@@ -32,7 +32,11 @@ git pull
 
 Vous pouvez lancer le script avec le terminal, en donnant comme paramètre l'identifiant, et cela va de base rendre les résultats en forme de tableau dans le terminal. Vous pouvez aussi spécifier le type de rendu que vous désirez.
 
-return_type -> -t = terminal, -s = site internet, -j = json
+return_type -> 
+-t = terminal,
+-j = json,
+-s = site internet
+
 
 ```console
 python3 main.py [identifiant]
