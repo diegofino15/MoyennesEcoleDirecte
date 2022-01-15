@@ -186,18 +186,18 @@ def calculate_averages(averages):
     return final_result
 
 def return_result(parameters, return_type='t'):
-    if return_type == 's' or return_type == '-s:
+    if return_type == 's' or return_type == '-s':
         with open('./index.html', 'w') as file:
             file.write(print_website(parameters))
             file.close()
         sys.exit('Site internet sauvegardé dans "./index.html" !')
 
-    elif return_type == 't' or return_type == '-t:
+    elif return_type == 't' or return_type == '-t':
         for i in range(3):
             print(return_terminal(parameters, i))
         sys.exit()
     
-    elif return_type == 'j' or return_type == '-j:
+    elif return_type == 'j' or return_type == '-j':
         print(parameters)
         sys.exit()
 
