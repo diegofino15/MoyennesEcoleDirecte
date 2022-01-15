@@ -409,7 +409,7 @@ if login_successful:
             file.close()
 
         print('Finished !\n')
-        print('Go see the website to index.html !\n')
+        print('Open the "index.html" in your browser to see the website ! \n')
  
     except:
         # Print that there was an error
