@@ -10,29 +10,29 @@ Vous devez avoir Python 3 installé ainsi que pip (installé en même temps que 
 La méthode habituelle.
 
 ```console
-$ git clone https://github.com/diegofino15/MoyennesEcoleDirecte.git
-$ cd ./MoyennesEcoleDirecte
+git clone https://github.com/diegofino15/MoyennesEcoleDirecte.git
+cd ./MoyennesEcoleDirecte
 ```
 
 Une fois le repo installé et une fois que vous êtes dedans, installez les modules requis.
 ```
-$ pip install requests
-$ pip install json
-$ pip install getpass
+pip install requests
+pip install json
+pip install getpass
 ```
 
 
 ### Mettre à jour
 Pour mettre votre clone à jour,
 ```console
-$ git pull
+git pull
 ```
 
 ## Utilisation
 
 Le script ne marche qu'avec les comptes `E` (Eleve). Les comptes famille ne sont pas supportés. Ouvrez le script depuis le terminal ou en cliquant sur l'icône dans le File Explorer.
 ```console
-$ python3 moyennes.py
+python3 moyennes.py
 ```
 
 ### Valeurs montrées
