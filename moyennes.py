@@ -188,7 +188,7 @@ def return_result(parameters, return_type='t'):
         with open('./index.html', 'w') as file:
             file.write(print_website(parameters))
             file.close()
-        sys.exit()
+        sys.exit('Website saved in "./index.html" !')
 
     elif return_type == 't':
         for i in range(3):
