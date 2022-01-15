@@ -9,7 +9,7 @@ from utilities import *
 
 def get_informations():
     try: username_received = sys.argv[1]
-    except: sys.exit('Exit : No username given')
+    except: sys.exit("Arrêt : Pas d'identifiant spécifié")
     try: return_type = sys.argv[2]
     except: return_type = 't'
 
@@ -204,4 +204,4 @@ response = verify_login(informations['username'], informations['password'])
 if response[0]:
     parameters = calculate_averages(response[1])
     return_result(parameters, informations['return_type'])
-else: sys.exit('Username or password wrong')
+else: sys.exit('Identifiant ou mot de passe invalide.')
