@@ -273,6 +273,9 @@ for index in results.keys():
 
         if average[1] == '.': average = f'0{average}'
         elif len(average) == 4: average = f'{average}0'
+            
+        if class_average[1] == '.': class_average = f'0{class_average}'
+        elif len(class_average) == 4: class_average = f'{class_average}0'
 
         results[index] = [average, class_average]
 
