@@ -202,7 +202,7 @@ def return_results(parameters, return_type='t'):
         sys.exit()
     
     elif return_type == 'j' or return_type == '-j':
-        print(parameters)
+        print(json.dumps(parameters))
         sys.exit()
 
 
