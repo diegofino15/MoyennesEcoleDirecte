@@ -1,4 +1,4 @@
-# notes-ed
+# MoyennesEcoleDirecte
 Ce programme vous permettra de récupérer des informations sur vos notes et de calculer votre moyenne, avec une simple 
 connexion à EcoleDirecte.
 
@@ -17,7 +17,7 @@ $ cd ./MoyennesEcoleDirecte-main
 Une fois le repo installé et une fois que vous êtes dedans, installez les modules requis.
 
 ```console
-$ py -m pip install -r .\requirements.txt
+$ python3 -m pip install -r requirements.txt
 ```
 ### Mettre à jour
 Pour mettre votre clone à jour,
@@ -29,7 +29,7 @@ $ git pull
 
 Le script ne marche qu'avec les comptes `E` (Eleve). Les comptes famille ne sont pas supportés. Ouvrez le script depuis le terminal ou en cliquant sur l'icône dans le File Explorer.
 ```console
-$ py ./moyennes.py
+$ python3 moyennes.py
 ```
 
 ### Valeurs montrées
