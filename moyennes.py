@@ -131,7 +131,7 @@ def login(username, password):
     payload_string = 'data=' + json.dumps(payload)
 
     # Send the request to get the informations
-    print('Connecting...')
+    print('Connection...')
     request = requests.Request('POST', url, data=payload_string)
     prepared_request = request.prepare()
     response = s.send(prepared_request)
@@ -140,7 +140,7 @@ def login(username, password):
 
     # Verify if there is no error
     if json_response['code'] == 200:
-        print('Connected successfully !')
+        print('Connection réussie !')
         # Get the needed informations
         student_id = json_response['data']['accounts'][0]['id']
         student_login_token = json_response['token']
@@ -154,7 +154,7 @@ def login(username, password):
         }
 
         # Send the request to get the informations
-        print('Getting notes...')
+        print('Collecte des notes...')
         average_request = requests.Request('POST', url_average, headers=payload_average, data='data={}')
         prepared_average_request = average_request.prepare()
         average_response = s.send(prepared_average_request)
@@ -167,8 +167,8 @@ def login(username, password):
     else: return None
 
 # Gets the informations given to the script
-username_received = input('Username : ')
-password_received = getpass.getpass(prompt="Password : ")
+username_received = input('Identifiant : ')
+password_received = getpass.getpass(prompt="Mot de passe : ")
 
 # Try to connect to the website and get the informations
 if username_received != '' and password_received != '':
@@ -181,12 +181,12 @@ else: login_successful = False
 
 if not login_successful:
     # Print that the login failed
-    print('The connection to your account failed, try another username or another password.')
+    print('La connection à votre compte a échoué, essayez un autre identifiant ou au autre mot de passe.')
     sys.exit()
 
 # If the login is successful, proceed the program
-print('Notes got successfully !')
-print('Calculating averages...')
+print('Notes récupérées !')
+print('Calcul des moyennes...')
 # Gets the complete name of the user
 if averages[1]['data']['accounts'][0]['particule'] == '': space = ''
 else: space = ' '
@@ -305,7 +305,7 @@ try:
 
 except:
     # Print that there was an error
-    print('There was an error, please contact the creator of this module.')
+    print('Il y a eu une erreur inattendue, contactez le créateur de ce module.')
     sys.exit()
 
 # Finally print the website
@@ -448,21 +448,21 @@ def return_terminal(index):
 '''
 
 
-response = input('Do you want the results in the terminal or in a website ?\nw : website\nt : terminal\n')
+response = input('Voulez-vous les résultats dans un site internet ou dans le terminal ?\ns : Site intsernet\nt : Terminal\n')
 while True:
-    if response == 'w':
+    if response == 's':
         with open('./index.html', 'w') as file:
             file.write(final_website)
             file.close()
 
-        print('Finished !\n')
-        print('Open the "index.html" in your browser to see the website ! \n')
+        print('Finit !\n')
+        print('Ouvrez le fichier "index.html" avec votre navigateur pour voir vos moyennes !\n')
         break
     elif response == 't':
         for i in range(3):
             print(return_terminal(i))
         break
-    elif response == 'exit':
+    elif response == 'sortir':
         break
     else:
-        print('Please write again...')
+        print("Réécrivez s'il vous plaît")
