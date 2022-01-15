@@ -35,8 +35,8 @@ Vous pouvez lancer le script avec le terminal, en donnant comme paramètre l'ide
 return_type -> -t = terminal, -s = site internet, -j = json
 
 ```console
-python3 moyennes.py [identifiant]
-python3 moyennes.py [identifiant] [return_type]
+python3 main.py [identifiant]
+python3 main.py [identifiant] [return_type]
 ```
 
 ### Attention
