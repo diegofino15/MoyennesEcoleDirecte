@@ -15,10 +15,13 @@ $ cd ./MoyennesEcoleDirecte-main
 ```
 
 Une fois le repo installé et une fois que vous êtes dedans, installez les modules requis.
-
-```console
-$ python3 -m pip install -r requirements.txt
 ```
+requests
+json
+getpass
+```
+
+
 ### Mettre à jour
 Pour mettre votre clone à jour,
 ```console
