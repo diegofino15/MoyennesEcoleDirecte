@@ -11,7 +11,7 @@ La méthode habituelle.
 
 ```console
 $ git clone https://github.com/diegofino15/MoyennesEcoleDirecte.git
-$ cd ./MoyennesEcoleDirecte-main
+$ cd ./MoyennesEcoleDirecte
 ```
 
 Une fois le repo installé et une fois que vous êtes dedans, installez les modules requis.
