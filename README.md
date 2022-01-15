@@ -6,16 +6,15 @@ Il y a aussi une version de ce programme en site internet disponible à : http:/
 ## Téléchargements
 
 ### Pré-requis
-Vous devez avoir Python 3 installé ainsi que pip (installé en même temps que Python).
+Il y a besoin de Python3, ainsi que pip.
 ### Installation
-La méthode habituelle.
 
 ```console
 git clone https://github.com/diegofino15/MoyennesEcoleDirecte.git
 cd ./MoyennesEcoleDirecte
 ```
 
-Une fois le repo installé et une fois que vous êtes dedans, installez les modules requis.
+Installez les modules requis, si vous ne les avez pas.
 ```console
 pip install requests
 pip install sys
@@ -25,14 +24,13 @@ pip install getpass
 
 
 ### Mettre à jour
-Pour mettre votre clone à jour,
 ```console
 git pull
 ```
 
 ## Utilisation
 
-Vous pouvez lancer le script avec le terminal, en donnant comme paramètre l'identifiant, et de base cela rend les résultats en forme de tableau dans le terminal. Vous pouvez aussi spécifier le type de rendu que vous désirez.
+Vous pouvez lancer le script avec le terminal, en donnant comme paramètre l'identifiant, et cela va de base rendre les résultats en forme de tableau dans le terminal. Vous pouvez aussi spécifier le type de rendu que vous désirez.
 
 return_type -> -t = terminal, -s = site internet, -j = json
 
@@ -42,4 +40,4 @@ python3 moyennes.py [identifiant] [return_type]
 ```
 
 ### Attention
-Les valeurs affichées ne sont pas exactes, car École Directe ne fournit pas les coefficients des contrôles, les moyennes devraient être assez proches de la réalité.
+Les moyennes affichées ne sont pas exactes, car École Directe ne fournit pas les coefficients des contrôles, mais les moyennes devraient cependant être assez proches de la réalité.
