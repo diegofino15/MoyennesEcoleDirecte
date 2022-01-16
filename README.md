@@ -47,7 +47,7 @@ Plusieurs systèmes sont disponibles :
 python3 main.py -user [identifiant] [return_type] -save
 python3 main.py [return_type]
 python3 main.py -user [identifiant] -remove
-python3 main.py [identifiant] [return_type]
+python3 main.py -user [identifiant] [return_type]
 ```
 
 ### Attention
