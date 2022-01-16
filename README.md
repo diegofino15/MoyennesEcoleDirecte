@@ -41,6 +41,8 @@ return_type ->
 
 -s = site internet
 
+Vous pouvez modifier tous ces prefixes dans le fichier : "custom.json", et vous pouvez changer aussi le nom du fichier où est stocké l'identifiant mémorisé par le programme.
+
 ### Système de compte
 Plusieurs systèmes sont disponibles : 
 ```console
