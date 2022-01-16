@@ -248,22 +248,22 @@ def get_codes():
     trimestres_codes = ['A001', 'A002', 'A003']
     # Define a variable for the materies codes
     subjects_codes = {
-        'francais': 'FRANC',
-        'latin': 'LCALA',
-        'anglais': 'AGL1',
-        'espagnol': 'ESP2',
-        'allemand': 'ALL2',
-        'histoire': 'HI-GE',
-        'emc': 'EMC',
-        'maths': 'MATHS',
-        'physique': 'PH-CH',
-        'svt': 'SVT',
-        'technologie': 'TECHN',
-        'sport': 'EPS',
-        'arts': 'A-PLA',
-        'musique': 'EDMUS',
-        'chorale': 'CHKCO',
-        'general': 'GENERAL'
+        'francais': {'code': 'FRANC', 'coef': 5},
+        'latin': {'code': 'LCALA', 'coef': 1},
+        'anglais': {'code': 'AGL1', 'coef': 4},
+        'espagnol': {'code': 'ESP2', 'coef': 3},
+        'allemand': {'code': 'ALL2', 'coef': 3},
+        'histoire': {'code': 'HI-GE', 'coef': 4},
+        'emc': {'code': 'EMC', 'coef': 4},
+        'maths': {'code': 'MATHS', 'coef': 5},
+        'physique': {'code': 'PH-CH', 'coef': 2},
+        'svt': {'code': 'SVT', 'coef': 2},
+        'technologie': {'code': 'TECHN', 'coef': 1},
+        'sport': {'code': 'EPS', 'coef': 2},
+        'arts': {'code': 'A-PLA', 'coef': 1},
+        'musique': {'code': 'EDMUS', 'coef': 1},
+        'chorale': {'code': 'CHKCO', 'coef': 0.5},
+        'general': {'code': 'GENERAL'}
     }
 
     return {
