@@ -17,7 +17,7 @@ def auto_connect():
         username = infos['username']
         password = infos['password']
 
-        print(f'Connection automatique à : {username}')
+        print(f'Auto connecting to : {username}')
 
         return {
             'successful': True,
@@ -31,56 +31,63 @@ def auto_connect():
 
 # Define a function to get the username and the password
 def get_info():
-    return_types = ['-t', '-j', '-s']
-    all_codes = ['-t', '-j', '-s', '-save', '-remove', '-user']
+    # Define the variables of the different input types
+    return_types = ['-t', '-s', '-j']
+    all_types = ['-t', '-s', '-j', '-save', '-rem', '-user']
 
-    # Collect all the information that were given
-    infos = sys.argv
-    #infos = infos.remove[0]
+    # Collect the informations given to the script
+    infos_received = sys.argv
 
+    # Define the basic variables
     username = ''
+    given_username = False
     return_type = '-t'
     save = False
     remove = False
-    username_given = False
 
-    for i in range(len(infos)):
-        info = infos[i]
-        if info == '-user': 
-            username_given = True
-            username = infos[i + 1]
-        elif info in return_types: return_type = info
-        elif info == '-save': 
-            save = True
-            remove = False
-        elif info == '-remove': 
-            remove = True
-            save = False
+    # Cycle trough the given informations and extract the needed infos
+    for index in range(len(infos_received)):
+        info = infos_received[index]
         
-    if remove and not username_given: sys.exit("Pas d'identifiant spécifié")
-    if save and not username_given: sys.exit("Pas d'identifiant spécifié")
+        # Detect the received info
+        if info in return_types: return_type = info
+        elif info == '-save': save = True
+        elif info == '-rem': remove = True
+        elif info == '-user':
+            given_username = True
+            username = infos_received[index + 1]
     
-    if not username_given: 
-        auto_infos = auto_connect()
-        if auto_infos['successful']:
+    # Verify that the given informations are logic
+    if save and not given_username: sys.exit("Pas d'identifiant spécifié")
+    elif remove and not given_username: sys.exit("Pas d'identifiant spécifié")
+    if save: remove = False
+    if remove: save = False
+
+    # Try to auto-connect with a registered username
+    if not given_username:
+        infos = auto_connect()
+        if infos['successful']:
             return {
-                'username': auto_infos['username'],
-                'password': auto_infos['password'],
+                'username': infos['username'],
+                'password': infos['password'],
                 'return_type': return_type,
                 'save': False,
-                'remove': False
+                'remove': False,
+                'auto': True
             }
-        else: sys.exit("Arrêt : Pas d'identifiant spécifié ou enregistré")
+        else: sys.exit("Pas d'identifiant spécifié")
+    # Ask for the password normally
     else:
-        if username not in all_codes:
+        if username not in all_types:
             return {
                 'username': username,
-                'password': getpass.getpass(prompt='Mot de passe : '),
+                'password': getpass.getpass(prompt="Mot de passe : "),
                 'return_type': return_type,
                 'save': save,
-                'remove': remove
+                'remove': remove,
+                'auto': False
             }
-        else: sys.exit("Arrêt : Pas d'identifiant spécifié")
+        else: sys.exit("Pas d'identifiant spécifié")
 
 # Define a function to save the account
 def save_info(username, password):
@@ -101,9 +108,7 @@ def remove_account(username):
             infos = json.load(file)
             file.close()
         
-        if username == infos['username']: 
-            os.remove("./users.json")
-            print(f"L'identifiant {username} n'est maintenant plus enregistré")
+        if username == infos['username']: os.remove("./users.json")
         else: sys.exit("Pas d'identifiant enregistré sous ce nom")
     except: sys.exit("Pas d'identifiant enregistré")
 
@@ -300,10 +305,16 @@ def run():
         # Return the wanted result
         if informations['save']: save_info(informations['username'], informations['password'])
 
-        if informations['remove']: remove_account(informations['username'])
+        if informations['remove']: 
+            remove_account(informations['username'])
+            print(f"L'identifiant {informations['username']} n'est maintenant plus enregistré")
         else: return_results(averages, informations['return_type'])
         sys.exit()
-    else: sys.exit('Identifiant ou mot de passe invalide.')
+    else:
+        if informations['auto']:
+            remove_account(informations['username'])
+            sys.exit("Cet identifiant et ce mot de passe sont invalides, suppression de la sauvegarde")
+        sys.exit('Identifiant ou mot de passe invalide.')
 
 
 if __name__ == '__main__': run()
