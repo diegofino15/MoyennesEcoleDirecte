@@ -29,8 +29,7 @@ def get_info():
                 save_info(username, password, uses)
             else: 
                 password = getpass.getpass('Confirmez votre mot de passe : ')
-                uses = 0
-                save_info(username, password, -1)
+                uses = -1
         except: sys.exit("Arrêt : Pas d'identifiant spécifié")
     
     try: return_type = sys.argv[2]
