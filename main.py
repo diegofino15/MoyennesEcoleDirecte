@@ -3,66 +3,99 @@ import requests
 import sys
 import json
 import getpass
+import os
 # Import the python script with the utilities
 from utilities import *
 
+# Define a function to search if there is a registered account
+def auto_connect():
+    try:
+        with open("./users.json", 'r') as file:
+            infos = json.load(file)
+            file.close()
+        
+        username = infos['username']
+        password = infos['password']
+
+        print(f'Auto connecting to : {username}')
+
+        return {
+            'successful': True,
+            'username': username,
+            'password': password
+        }
+    except:
+        return {
+            'successful': False
+        }
+
 # Define a function to get the username and the password
 def get_info():
-    # Try to get a already used account from files
-    try: 
-        username = sys.argv[1]
-        # Get the user password
-        password = getpass.getpass('Mot de passe : ')
-        uses = 0
-    except:
-        try:
-            with open("./users.json") as file:
-                info = json.load(file)
-                file.close()
+    return_types = ['-t', '-j', '-s']
+    all_codes = ['-t', '-j', '-s', '-save', '-remove', '-user']
 
-            uses = info['uses']
-            username = info['username']
-            if uses < 3:
-                password = info['password']
+    # Collect all the information that were given
+    infos = sys.argv
+    #infos = infos.remove[0]
 
-                print(f"Prise de l'ancien identifiant sauvegardé : {username}")
-                save_info(username, password, uses)
-            else: 
-                password = getpass.getpass('Confirmez votre mot de passe : ')
-                uses = -1
-        except: sys.exit("Arrêt : Pas d'identifiant spécifié")
+    username = ''
+    return_type = '-t'
+    save = False
+    remove = False
+    username_given = False
+
+    for i in range(len(infos)):
+        info = infos[i]
+        if info == '-user': 
+            username_given = True
+            username = infos[i + 1]
+        elif info in return_types: return_type = info
+        elif info == '-save': 
+            save = True
+            remove = False
+        elif info == '-remove': 
+            remove = True
+            save = False
+        
+    if remove and not username_given: sys.exit("Pas d'identifiant spécifié")
+    if save and not username_given: sys.exit("Pas d'identifiant spécifié")
     
-    try: return_type = sys.argv[2]
-    except: return_type = '-t'
-
-    try: save = sys.argv[3]
-    except: save = False
-
-    if save == '-save': save = True
-    if username[0] == '-': username = username.replace('-', '')
-
-    return_types = ['-t', 't', '-s', 's', '-j', 'j']
-    if not return_type in return_types: return_type = '-t'
-
-    # Return the informations
-    return {
-        'username': username,
-        'password': password,
-        'return_type': return_type,
-        'save': save,
-        'uses': uses
-    }
+    if not username_given: 
+        auto_infos = auto_connect()
+        if auto_infos['successful']:
+            return {
+                'username': auto_infos['username'],
+                'password': auto_infos['password'],
+                'return_type': return_type,
+                'save': True,
+                'remove': False
+            }
+        else: sys.exit("Arrêt : Pas d'identifiant spécifié ou enregistré")
+    else:
+        if username not in all_codes:
+            return {
+                'username': username,
+                'password': getpass.getpass(prompt='Mot de passe : '),
+                'return_type': return_type,
+                'save': save,
+                'remove': remove
+            }
+        else: sys.exit("Arrêt : Pas d'identifiant spécifié")
 
 # Define a function to save the account
-def save_info(username, password, uses):
+def save_info(username, password):
     data = {
         'username': username,
-        'password': password,
-        'uses': uses + 1
+        'password': password
     }
     with open('./users.json', 'w') as file:
         json.dump(data, file)
         file.close()
+
+# Define a function to remove and account given
+def remove_account():
+    try: os.remove('./users.json')
+    except: sys.exit("Pas d'identifiant enregistré")
 
 # Define a function to login into Ecole Directe API and get the notes
 def login(username, password):
@@ -248,10 +281,10 @@ def run():
     if reponse[0]:
         averages = calculate_averages(reponse[1])
         # Return the wanted result
-        if informations['save']: 
-            print("Sauvegarde des informations...")
-            save_info(informations['username'], informations['password'], informations['uses'])
-        return_results(averages, informations['return_type'])
+        if informations['save']: save_info(informations['username'], informations['password'])
+
+        if informations['remove']: remove_account()
+        else: return_results(averages, informations['return_type'])
         sys.exit()
     else: sys.exit('Identifiant ou mot de passe invalide.')
 
