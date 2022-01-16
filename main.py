@@ -17,7 +17,7 @@ def auto_connect():
         username = infos['username']
         password = infos['password']
 
-        print(f'Auto connecting to : {username}')
+        print(f'Connection automatique à : {username}')
 
         return {
             'successful': True,
