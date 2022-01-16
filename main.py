@@ -93,8 +93,14 @@ def save_info(username, password):
         file.close()
 
 # Define a function to remove and account given
-def remove_account():
-    try: os.remove('./users.json')
+def remove_account(username):
+    try: 
+        with open('./users.json', 'r') as file:
+            infos = json.load(file)
+            file.close()
+        
+        if username == infos['username]: os.remove('./users.json')
+        else: sys.exit("Pas d'identifiant enregistré sous ce nom")
     except: sys.exit("Pas d'identifiant enregistré")
 
 # Define a function to login into Ecole Directe API and get the notes
