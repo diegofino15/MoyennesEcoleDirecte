@@ -91,6 +91,8 @@ def save_info(username, password):
     with open('./users.json', 'w') as file:
         json.dump(data, file)
         file.close()
+       
+    print("Compte enregistré")
 
 # Define a function to remove and account given
 def remove_account(username):
