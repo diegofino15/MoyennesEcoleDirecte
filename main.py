@@ -103,7 +103,7 @@ def remove_account(username):
         
         if username == infos['username']: 
             os.remove("./users.json")
-            print(f"L'identifiant {username} n'est plus enregistré")
+            print(f"L'identifiant {username} n'est maintenant plus enregistré")
         else: sys.exit("Pas d'identifiant enregistré sous ce nom")
     except: sys.exit("Pas d'identifiant enregistré")
 
