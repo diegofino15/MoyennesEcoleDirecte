@@ -187,7 +187,7 @@ def calculate_averages(averages):
     # Load "results" with all of the materies in all of the trimestres
     for trimestre in trimestres_codes:
         for subject in subjects_codes.keys():
-            subject_code = subjects_codes[subject]
+            subject_code = subjects_codes[subject]['code']
             results.update({(trimestre, subject_code): [0, 0, 0, 0]})
 
     # Add-up the notes to get the average
@@ -218,11 +218,18 @@ def calculate_averages(averages):
 
     # Add-up the notes to get the general average
     for index in results.keys():
-        if index[1] != subjects_codes['general']:
-            results[(index[0], subjects_codes['general'])][0] += results[index][0]
-            results[(index[0], subjects_codes['general'])][1] += results[index][1]
-            results[(index[0], subjects_codes['general'])][2] += results[index][2]
-            results[(index[0], subjects_codes['general'])][3] += results[index][3]
+        if index[1] != subjects_codes['general']['code']:
+            # Get the coeficient of the subject
+            for subject in subjects_codes.keys():
+                subject_code = subjects_codes[subject]
+                if subject_code['code'] == index[1]:
+                    coeficient = subject_code['coef']
+                    break
+            
+            results[(index[0], subjects_codes['general']['code'])][0] += results[index][0] * coeficient
+            results[(index[0], subjects_codes['general']['code'])][1] += results[index][1] * coeficient
+            results[(index[0], subjects_codes['general']['code'])][2] += results[index][2] * coeficient
+            results[(index[0], subjects_codes['general']['code'])][3] += results[index][3] * coeficient
 
     # Calculate the averages
     for index in results.keys():
@@ -234,14 +241,14 @@ def calculate_averages(averages):
             class_average = str(r(results[index][2] / results[index][3]))
 
             if average[1] == '.': average = f'0{average}'
-            elif len(average) == 4: average = f'{average}0'
+            if len(average) == 4: average = f'{average}0'
                 
             if class_average[1] == '.': class_average = f'0{class_average}'
-            elif len(class_average) == 4: class_average = f'{class_average}0'
+            if len(class_average) == 4: class_average = f'{class_average}0'
 
             results[index] = [average, class_average]
 
-    def return_average(matiere_code, index=0): return [results[(trimestres_codes[0], matiere_code)][index], results[(trimestres_codes[1], matiere_code)][index], results[(trimestres_codes[2], matiere_code)][index]]
+    def return_average(matiere_code, index=0): return [results[(trimestres_codes[0], matiere_code['code'])][index], results[(trimestres_codes[1], matiere_code['code'])][index], results[(trimestres_codes[2], matiere_code['code'])][index]]
 
     return {
         # Gets the averages into dedicated variables
