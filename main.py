@@ -7,10 +7,46 @@ import os
 # Import the python script with the utilities
 from utilities import *
 
-# Define a function to search if there is a registered account
-def auto_connect():
+# Define a function to get the variable names from a file
+def get_custom_info():
     try:
-        with open("./users.json", 'r') as file:
+        with open('./custom.json', 'r') as file:
+            infos = json.load(file)
+            file.close()
+
+        return {
+            'cache-file-name' : infos['cache-file-name'],
+            'user-prefix' : infos['user-prefix'],
+            'save-prefix' : infos['save-prefix'],
+            'remove-prefix' : infos['remove-prefix'],
+
+            'json-prefix' : infos['json-prefix'],
+            'terminal-prefix' : infos['terminal-prefix'],
+            'website-prefix' : infos['website-prefix']
+        }
+
+    except:
+        infos = {
+            'cache-file-name' : 'users',
+            'user-prefix' : '-user',
+            'save-prefix' : '-save',
+            'remove-prefix' : '-remove',
+
+            'json-prefix' : '-j',
+            'terminal-prefix' : '-t',
+            'website-prefix' : '-s'
+        }
+
+        with open("./custom.json", 'w') as file:
+            json.dump(infos, file)
+            file.close()
+        
+        return infos
+
+# Define a function to search if there is a registered account
+def auto_connect(cache_file_name):
+    try:
+        with open(f"./{cache_file_name}.json", 'r') as file:
             infos = json.load(file)
             file.close()
         
@@ -30,10 +66,10 @@ def auto_connect():
         }
 
 # Define a function to get the username and the password
-def get_info():
+def get_info(cache_file_name, terminal_prefix, webiste_prefix, json_prefix, save_prefix, remove_prefix, user_prefix):
     # Define the variables of the different input types
-    return_types = ['-t', '-s', '-j']
-    all_types = ['-t', '-s', '-j', '-save', '-rem', '-user']
+    return_types = [terminal_prefix, webiste_prefix, json_prefix]
+    all_types = [terminal_prefix, webiste_prefix, json_prefix, save_prefix, remove_prefix, user_prefix]
 
     # Collect the informations given to the script
     infos_received = sys.argv
@@ -41,7 +77,7 @@ def get_info():
     # Define the basic variables
     username = ''
     given_username = False
-    return_type = '-t'
+    return_type = terminal_prefix
     save = False
     remove = False
 
@@ -51,9 +87,9 @@ def get_info():
         
         # Detect the received info
         if info in return_types: return_type = info
-        elif info == '-save': save = True
-        elif info == '-rem': remove = True
-        elif info == '-user':
+        elif info == save_prefix: save = True
+        elif info == remove_prefix: remove = True
+        elif info == user_prefix:
             given_username = True
             username = infos_received[index + 1]
     
@@ -65,7 +101,7 @@ def get_info():
 
     # Try to auto-connect with a registered username
     if not given_username:
-        infos = auto_connect()
+        infos = auto_connect(cache_file_name)
         if infos['successful']:
             return {
                 'username': infos['username'],
@@ -90,21 +126,21 @@ def get_info():
         else: sys.exit("Pas d'identifiant spécifié")
 
 # Define a function to save the account
-def save_info(username, password):
+def save_info(username, password, cache_file_name):
     data = {
         'username': username,
         'password': password
     }
-    with open('./users.json', 'w') as file:
+    with open(f'./{cache_file_name}.json', 'w') as file:
         json.dump(data, file)
         file.close()
        
     print("Compte enregistré")
 
 # Define a function to remove and account given
-def remove_account(username):
+def remove_account(username, cache_file_name):
     try: 
-        with open('./users.json', 'r') as file:
+        with open(f'./{cache_file_name}.json', 'r') as file:
             infos = json.load(file)
             file.close()
         
@@ -278,41 +314,42 @@ def calculate_averages(averages):
     }
 
 # Define a function to return the wanted result
-def return_results(parameters, return_type='t'):
-    if return_type == 's' or return_type == '-s':
+def return_results(parameters, custom_infos, return_type):
+    if return_type == custom_infos['website-prefix']:
         with open('./index.html', 'w') as file:
             file.write(print_website(parameters))
             file.close()
         sys.exit('Site internet sauvegardé dans "./index.html" !')
 
-    elif return_type == 't' or return_type == '-t':
+    elif return_type == custom_infos['terminal-prefix']:
         for i in range(3):
             print(return_terminal(parameters, i))
         sys.exit()
     
-    elif return_type == 'j' or return_type == '-j':
+    elif return_type == custom_infos['json-prefix']:
         print(json.dumps(parameters))
         sys.exit()
 
 # Define a main function, who is the principal program
 def run():
     # Get the informations
-    informations = get_info()
+    prefixes = get_custom_info()
+    informations = get_info(prefixes['cache-file-name'], prefixes['terminal-prefix'], prefixes['website-prefix'], prefixes['json-prefix'], prefixes['save-prefix'], prefixes['remove-prefix'], prefixes['user-prefix'])
     reponse = verify_login(informations['username'], informations['password'])
     # Verify that the login was successful
     if reponse[0]:
         averages = calculate_averages(reponse[1])
         # Return the wanted result
-        if informations['save']: save_info(informations['username'], informations['password'])
+        if informations['save']: save_info(informations['username'], informations['password'], prefixes['cache-file-name'])
 
         if informations['remove']: 
-            remove_account(informations['username'])
+            remove_account(informations['username'], prefixes['cache-file-name'])
             print(f"L'identifiant {informations['username']} n'est maintenant plus enregistré")
-        else: return_results(averages, informations['return_type'])
+        else: return_results(averages, prefixes, informations['return_type'])
         sys.exit()
     else:
         if informations['auto']:
-            remove_account(informations['username'])
+            remove_account(informations['username'], prefixes['cache-file-name'])
             sys.exit("Cet identifiant et ce mot de passe sont invalides, suppression de la sauvegarde")
         sys.exit('Identifiant ou mot de passe invalide.')
 
