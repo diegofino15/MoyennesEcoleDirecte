@@ -18,6 +18,7 @@ Installez les modules requis, si vous ne les avez pas.
 ```console
 pip install requests
 pip install sys
+pip install os
 pip install json
 pip install getpass
 ```
@@ -33,18 +34,21 @@ git pull
 Vous pouvez lancer le script avec le terminal, en donnant comme paramètre l'identifiant, et cela va de base rendre les résultats en forme de tableau dans le terminal. Vous pouvez aussi spécifier le type de rendu que vous désirez.
 
 return_type -> 
+
 -t = terminal,
+
 -j = json,
+
 -s = site internet
 
-
+### Système de compte
+Plusieurs systèmes sont disponibles : 
 ```console
-python3 main.py [identifiant]
+python3 main.py -user [identifiant] [return_type] -save
+python3 main.py [return_type]
+python3 main.py -user [identifiant] -remove
 python3 main.py [identifiant] [return_type]
 ```
-
-### Système de compte
-Vous pouvez lancer le script en écrivant : "python main.py [identifiant] [return_type] -save" pour sauvegarder les informations, et vous pourrez relancer le script avec aucun arguments encore deux fois avant qu'il faille confirmer le mot de passe.
 
 ### Attention
 Les moyennes affichées ne sont pas exactes, car École Directe ne fournit pas les coefficients des contrôles, mais les moyennes devraient cependant être assez proches de la réalité.
