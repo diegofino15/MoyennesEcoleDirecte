@@ -67,7 +67,7 @@ def get_info():
                 'username': auto_infos['username'],
                 'password': auto_infos['password'],
                 'return_type': return_type,
-                'save': True,
+                'save': False,
                 'remove': False
             }
         else: sys.exit("Arrêt : Pas d'identifiant spécifié ou enregistré")
