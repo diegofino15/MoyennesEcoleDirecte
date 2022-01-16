@@ -289,7 +289,7 @@ def run():
         # Return the wanted result
         if informations['save']: save_info(informations['username'], informations['password'])
 
-        if informations['remove']: remove_account()
+        if informations['remove']: remove_account(informations['username'])
         else: return_results(averages, informations['return_type'])
         sys.exit()
     else: sys.exit('Identifiant ou mot de passe invalide.')
