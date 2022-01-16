@@ -9,22 +9,37 @@ from utilities import *
 # Define a function to get the username and the password
 def get_info():
     # Try to get a already used account from files
-    try:
-        with open("./users.json") as file:
-            info = json.load(file)
-            file.close()
-        
-        username = info['username']
-        password = info['password']
-    except:
-        try: username = sys.argv[1]
-        except: sys.exit("Arrêt : Pas d'identifiant spécifié")
+    try: 
+        username = sys.argv[1]
         # Get the user password
         password = getpass.getpass('Mot de passe : ')
+        uses = 0
+    except:
+        try:
+            with open("./users.json") as file:
+                info = json.load(file)
+                file.close()
 
+            uses = info['uses']
+            username = info['username']
+            if uses < 3:
+                password = info['password']
+
+                print(f"Prise de l'ancien identifiant sauvegardé : {username}")
+                save_info(username, password, uses)
+            else: 
+                password = getpass.getpass('Confirmez votre mot de passe : ')
+                uses = 0
+                save_info(username, password, -1)
+        except: sys.exit("Arrêt : Pas d'identifiant spécifié")
+    
     try: return_type = sys.argv[2]
     except: return_type = '-t'
 
+    try: save = sys.argv[3]
+    except: save = False
+
+    if save == '-save': save = True
     if username[0] == '-': username = username.replace('-', '')
 
     return_types = ['-t', 't', '-s', 's', '-j', 'j']
@@ -34,14 +49,17 @@ def get_info():
     return {
         'username': username,
         'password': password,
-        'return_type': return_type
+        'return_type': return_type,
+        'save': save,
+        'uses': uses
     }
 
 # Define a function to save the account
-def save_info(username, password):
+def save_info(username, password, uses):
     data = {
         'username': username,
-        'password': password
+        'password': password,
+        'uses': uses + 1
     }
     with open('./users.json', 'w') as file:
         json.dump(data, file)
@@ -183,7 +201,7 @@ def calculate_averages(averages):
 
     def return_average(matiere_code, index=0): return [results[(trimestres_codes[0], matiere_code)][index], results[(trimestres_codes[1], matiere_code)][index], results[(trimestres_codes[2], matiere_code)][index]]
 
-    final_result = {
+    return {
         # Gets the averages into dedicated variables
         "complete_name": complete_name,
         "general_averages" : return_average(subjects_codes['general']),
@@ -205,8 +223,6 @@ def calculate_averages(averages):
         "chorale" : return_average(subjects_codes['chorale'])
     }
 
-    return final_result
-
 # Define a function to return the wanted result
 def return_results(parameters, return_type='t'):
     if return_type == 's' or return_type == '-s':
@@ -224,14 +240,21 @@ def return_results(parameters, return_type='t'):
         print(json.dumps(parameters))
         sys.exit()
 
+# Define a main function, who is the principal program
+def run():
+    # Get the informations
+    informations = get_info()
+    reponse = verify_login(informations['username'], informations['password'])
+    # Verify that the login was successful
+    if reponse[0]:
+        averages = calculate_averages(reponse[1])
+        # Return the wanted result
+        if informations['save']: 
+            print("Sauvegarde des informations...")
+            save_info(informations['username'], informations['password'], informations['uses'])
+        return_results(averages, informations['return_type'])
+        sys.exit()
+    else: sys.exit('Identifiant ou mot de passe invalide.')
 
-# Get the informations
-informations = get_info()
-reponse = verify_login(informations['username'], informations['password'])
-# Verify that the login was successful
-if reponse[0]:
-    averages = calculate_averages(reponse[1])
-    # Return the wanted result
-    save_info(informations['username'], informations['password'])
-    return_results(averages, informations['return_type'])
-else: sys.exit('Identifiant ou mot de passe invalide.')
+
+if __name__ == '__main__': run()
