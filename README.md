@@ -43,5 +43,8 @@ python3 main.py [identifiant]
 python3 main.py [identifiant] [return_type]
 ```
 
+### Système de compte
+Vous pouvez lancer le script en écrivant : "python main.py [identifiant] [return_type] -save" pour sauvegarder les informations, et vous pourrez relancer le script avec aucun arguments encore deux fois avant qu'il faille confirmer le mot de passe.
+
 ### Attention
 Les moyennes affichées ne sont pas exactes, car École Directe ne fournit pas les coefficients des contrôles, mais les moyennes devraient cependant être assez proches de la réalité.
